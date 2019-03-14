@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by rucsac on 15/10/2018.
  */
-@RepositoryRestResource
+@RepositoryRestResource(excerptProjection = TherapyProjection.class)
 public interface TherapyRepository extends JpaRepository<Therapy, Long> {
 
     @RestResource(path = "byMed", rel = "byMed")
