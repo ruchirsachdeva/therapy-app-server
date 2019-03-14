@@ -24,9 +24,6 @@ public class Therapy {
     @ManyToOne
     @JoinColumn(name = "med_id")
     private User med;
-    @ManyToOne
-    @JoinColumn(name = "therapylist_id")
-    private TherapyList therapylist;
 
     @Embedded
     private Duration duration;

@@ -28,7 +28,9 @@ public class TherapyService {
     }
 
     private User findNearestMedByOrganization(User patient, Long organizationId) {
-        List<User> possibleMeds = this.userRepository.findByOrganizations_OrganizationId(organizationId);
+
+
+        List<User> possibleMeds = this.userRepository.findByRole_NameAndOrganizations_organizationId("physician", organizationId);
         double distance = 0d;
         double minDistance = 1000000d;
         User nearestMed = null;

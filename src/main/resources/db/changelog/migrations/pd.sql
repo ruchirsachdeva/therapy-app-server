@@ -14,24 +14,6 @@ SET time_zone = "+00:00";
 -- Database: `pd_db`
 --
 
--- --------------------------------------------------------
-
---
--- Table structure for table `medicine`
---
-
-CREATE TABLE `medicine` (
-  `medicine_id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `medicine`
---
-
-INSERT INTO `medicine` (`medicine_id`, `name`) VALUES
-  (1, 'Medicine 1'),
-  (2, 'Medicine 2');
 
 -- --------------------------------------------------------
 
@@ -91,9 +73,7 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`role_id`, `name`, `type`) VALUES
   (1, 'patient', '1'),
-  (2, 'physician', '2'),
-  (3, 'researcher', '3'),
-  (4, 'junior researcher', '3');
+  (2, 'physician', '2');
 
 -- --------------------------------------------------------
 
@@ -133,7 +113,6 @@ CREATE TABLE `therapy` (
   `therapy_id` int(11) NOT NULL,
   `patient_id` int(11) NOT NULL,
   `med_id` int(11) NOT NULL,
-  `therapylist_id` int(11) NOT NULL,
   `start_time` datetime,
   `end_time` datetime
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -142,29 +121,9 @@ CREATE TABLE `therapy` (
 -- Dumping data for table `therapy`
 --
 
-INSERT INTO `therapy` (`therapy_id`, `patient_id`, `med_id`, `therapylist_id`, `start_time`) VALUES
-  (1, 3, 1, 1,'2018-12-01 18:00:00'),
-  (2, 4, 1, 1, '2018-12-01 18:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `therapy_list`
---
-
-CREATE TABLE `therapy_list` (
-  `therapy_list_id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `medicine_id` int(11) NOT NULL,
-  `dosage` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `therapy_list`
---
-
-INSERT INTO `therapy_list` (`therapy_list_id`, `name`, `medicine_id`, `dosage`) VALUES
-  (1, 'Therapy trials with Medicine 1', 1, '400 ml');
+INSERT INTO `therapy` (`therapy_id`, `patient_id`, `med_id`,  `start_time`) VALUES
+  (1, 3, 1, '2018-12-01 18:00:00'),
+  (2, 4, 1, '2018-12-01 18:00:00');
 
 -- --------------------------------------------------------
 
@@ -193,10 +152,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `email`, `role_id`, `lat`, `long`) VALUES
-  (1, 'doc', 'doc@hospital.com', 2, NULL, NULL),
-  (2, 'researcher', 'res@uni.se', 3, NULL, NULL),
+  (1, 'doc', 'doc@hospital.com', 2, 55.6567, 13.7109),
+  (2, 'researcher', 'res@uni.se', 2, 49.6567, 10.5912),
   (3, 'patient1', 'x@gmail.com', 1, 59.6567, 16.6709),
-  (4, 'patient2', 'y@happyemail.com', 1, 57.3365, 12.5164);
+  (4, 'patient2', 'y@happyemail.com', 1, 57.3365, 12.5164),
+  (5, 'doc1', 'doc1@hospital.com', 2, 25.6722, 7.1509),
+  (6, 'doc2', 'doc2@hospital.com', 2, 35.3367, 9.1209);
 
 
 
@@ -222,7 +183,10 @@ INSERT INTO `user_organization` (`user_id`, `organization_id`) VALUES
   (1, 2),
   (2, 2),
   (3, 1),
-  (4, 1);
+  (4, 1),
+  (5, 2),
+  (6, 1),
+  (6, 2);
 
 
 
@@ -246,11 +210,6 @@ CREATE TABLE `working_hours` (
 -- Indexes for dumped tables
 --
 
---
--- Indexes for table `medicine`
---
-ALTER TABLE `medicine`
-  ADD PRIMARY KEY (`medicine_id`);
 
 --
 -- Indexes for table `note`
@@ -286,15 +245,7 @@ ALTER TABLE `test_session`
 ALTER TABLE `therapy`
   ADD PRIMARY KEY (`therapy_id`),
   ADD KEY `fk_UserID_Patient_idx` (`patient_id`),
-  ADD KEY `fk_UserID_medic_idx` (`med_id`),
-  ADD KEY `fk_Therapy_ListID_idx` (`therapylist_id`);
-
---
--- Indexes for table `therapy_list`
---
-ALTER TABLE `therapy_list`
-  ADD PRIMARY KEY (`therapy_list_id`),
-  ADD KEY `fk_medicineID_idx` (`medicine_id`);
+  ADD KEY `fk_UserID_medic_idx` (`med_id`);
 
 --
 -- Indexes for table `user`
@@ -307,7 +258,7 @@ ALTER TABLE `user`
 
 
 --
--- Indexes for table `therapy_list`
+-- Indexes for table `working_hours`
 --
 ALTER TABLE `working_hours`
   ADD PRIMARY KEY (`working_hours_id`);
@@ -316,12 +267,6 @@ ALTER TABLE `working_hours`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `medicine`
---
-ALTER TABLE `medicine`
-  MODIFY `medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `note`
@@ -353,11 +298,6 @@ ALTER TABLE `test_session`
 ALTER TABLE `therapy`
   MODIFY `therapy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
---
--- AUTO_INCREMENT for table `therapy_list`
---
-ALTER TABLE `therapy_list`
-  MODIFY `therapy_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -392,15 +332,9 @@ ALTER TABLE `test_session`
 -- Constraints for table `therapy`
 --
 ALTER TABLE `therapy`
-  ADD CONSTRAINT `fk_Therapy_ListID` FOREIGN KEY (`therapylist_id`) REFERENCES `therapy_list` (`therapy_list_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_UserID_Patient` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_UserID_medic` FOREIGN KEY (`med_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
---
--- Constraints for table `therapy_list`
---
-ALTER TABLE `therapy_list`
-  ADD CONSTRAINT `fk_MedicineID` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`medicine_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `user`
