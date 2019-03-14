@@ -35,6 +35,7 @@ public class SignupForm {
 	private Double longitude;
 
 	private Long organizationId;
+	private String roleName;
 
 
 	@Override

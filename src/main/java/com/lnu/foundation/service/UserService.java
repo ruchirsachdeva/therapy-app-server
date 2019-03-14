@@ -1,9 +1,7 @@
 package com.lnu.foundation.service;
 
 import com.lnu.foundation.model.*;
-import com.lnu.foundation.repository.TestSessionRepository;
-import com.lnu.foundation.repository.TherapyRepository;
-import com.lnu.foundation.repository.UserRepository;
+import com.lnu.foundation.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,6 +36,12 @@ public class UserService implements UserDetailsService {
     private TherapyService therapyService;
 
     @Autowired
+    private RoleRepository roleRepo;
+
+    @Autowired
+    private OrganizationRepository orgRepo;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Collection<TestSession> getSessions(String username) {
@@ -69,6 +73,8 @@ public class UserService implements UserDetailsService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public User signup(SignupForm signupForm) {
+        Role role = this.roleRepo.findByName(signupForm.getRoleName());
+
         final User user = new User();
         user.setEmail(signupForm.getEmail());
         user.setUsername(signupForm.getUsername());
@@ -79,9 +85,17 @@ public class UserService implements UserDetailsService {
         user.setProvider(signupForm.getProvider());
         user.setLat(signupForm.getLatitude());
         user.setLongitude(signupForm.getLongitude());
+        user.setRole(role);
+        if ("PHYSICIAN".equalsIgnoreCase(signupForm.getRoleName())) {
+            Organization org = this.orgRepo.getOne(signupForm.getOrganizationId());
+            user.addOrganization(org);
+        }
         repository.save(user);
 
-        this.therapyService.startTherapy(user, signupForm.getOrganizationId());
+        if ("PATIENT".equalsIgnoreCase(signupForm.getRoleName())) {
+            this.therapyService.startTherapy(user, signupForm.getOrganizationId());
+        }
+        
         return user;
     }
 
