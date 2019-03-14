@@ -21,8 +21,4 @@ public interface OrganizationRepository extends JpaRepository<Organization, Long
 
 
 
-
-
-
-
 }

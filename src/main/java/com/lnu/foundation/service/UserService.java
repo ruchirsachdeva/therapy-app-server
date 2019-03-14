@@ -35,6 +35,9 @@ public class UserService implements UserDetailsService {
     private TherapyRepository therapyRepository;
 
     @Autowired
+    private TherapyService therapyService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Collection<TestSession> getSessions(String username) {
@@ -77,6 +80,8 @@ public class UserService implements UserDetailsService {
         user.setLat(signupForm.getLatitude());
         user.setLongitude(signupForm.getLongitude());
         repository.save(user);
+
+        this.therapyService.startTherapy(user, signupForm.getOrganizationId());
         return user;
     }
 

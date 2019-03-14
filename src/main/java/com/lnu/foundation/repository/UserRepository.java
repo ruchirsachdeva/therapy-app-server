@@ -15,9 +15,11 @@ import java.util.Optional;
 @RepositoryRestResource
 //@CrossOrigin(origins = {"http://localhost:4200", "https://lit-beach-29911.herokuapp.com"})
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByRole_Name(@Param("role")String role);
+    List<User> findByRole_Name(@Param("role") String role);
+
     @RestResource
-    Optional<User> findByUsername(@Param("username")String username);
+    Optional<User> findByUsername(@Param("username") String username);
 
-
+    @RestResource
+    List<User> findByOrganizations_OrganizationId(@Param("organizationId") Long organizationId);
 }

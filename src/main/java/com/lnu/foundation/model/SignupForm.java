@@ -34,6 +34,8 @@ public class SignupForm {
 	private Double latitude;
 	private Double longitude;
 
+	private Long organizationId;
+
 
 	@Override
 	public String toString() {
