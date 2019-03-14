@@ -113,6 +113,7 @@ CREATE TABLE `therapy` (
   `therapy_id` int(11) NOT NULL,
   `patient_id` int(11) NOT NULL,
   `med_id` int(11) NOT NULL,
+  `organization_id` int(11) NOT NULL,
   `start_time` datetime,
   `end_time` datetime
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -245,7 +246,8 @@ ALTER TABLE `test_session`
 ALTER TABLE `therapy`
   ADD PRIMARY KEY (`therapy_id`),
   ADD KEY `fk_UserID_Patient_idx` (`patient_id`),
-  ADD KEY `fk_UserID_medic_idx` (`med_id`);
+  ADD KEY `fk_UserID_medic_idx` (`med_id`),
+  ADD KEY `fk_UserID_organization_idx` (`organization_id`);
 
 --
 -- Indexes for table `user`
@@ -333,7 +335,9 @@ ALTER TABLE `test_session`
 --
 ALTER TABLE `therapy`
   ADD CONSTRAINT `fk_UserID_Patient` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_UserID_medic` FOREIGN KEY (`med_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_UserID_medic` FOREIGN KEY (`med_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_UserID_org` FOREIGN KEY (`organization_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 
 
 --

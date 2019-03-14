@@ -28,6 +28,8 @@ public class Therapy {
     @Embedded
     private Duration duration;
 
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
     private Organization organization;
 
 
