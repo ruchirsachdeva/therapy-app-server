@@ -1,7 +1,9 @@
 package com.lnu.foundation.service;
 
+import com.lnu.foundation.model.Organization;
 import com.lnu.foundation.model.Therapy;
 import com.lnu.foundation.model.User;
+import com.lnu.foundation.repository.OrganizationRepository;
 import com.lnu.foundation.repository.TherapyRepository;
 import com.lnu.foundation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,18 @@ public class TherapyService {
     @Autowired
     private TherapyRepository therapyRepository;
     @Autowired
+    private OrganizationRepository orgRepository;
+    @Autowired
     private UserRepository userRepository;
 
 
     public void startTherapy(User patient, Long organizationId) {
         Therapy therapy = new Therapy();
         therapy.setPatient(patient);
+
+        Organization org = this.orgRepository.getOne(organizationId);
+        therapy.setOrganization(org);
+
         User therapist = findNearestMedByOrganization(patient, organizationId);
         therapy.setMed(therapist);
         this.therapyRepository.save(therapy);

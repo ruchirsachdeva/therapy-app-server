@@ -28,5 +28,7 @@ public class Therapy {
     @Embedded
     private Duration duration;
 
+    private Organization organization;
+
 
 }

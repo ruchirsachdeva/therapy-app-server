@@ -121,9 +121,9 @@ CREATE TABLE `therapy` (
 -- Dumping data for table `therapy`
 --
 
-INSERT INTO `therapy` (`therapy_id`, `patient_id`, `med_id`,  `start_time`) VALUES
-  (1, 3, 1, '2018-12-01 18:00:00'),
-  (2, 4, 1, '2018-12-01 18:00:00');
+INSERT INTO `therapy` (`therapy_id`, `patient_id`, `organization_id`, `med_id`,  `start_time`) VALUES
+  (1, 3, 1, 2, '2018-12-01 18:00:00'),
+  (2, 4, 1, 1, '2018-12-01 18:00:00');
 
 -- --------------------------------------------------------
 

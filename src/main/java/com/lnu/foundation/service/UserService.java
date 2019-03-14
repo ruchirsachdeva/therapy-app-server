@@ -95,7 +95,7 @@ public class UserService implements UserDetailsService {
         if ("PATIENT".equalsIgnoreCase(signupForm.getRoleName())) {
             this.therapyService.startTherapy(user, signupForm.getOrganizationId());
         }
-        
+
         return user;
     }
 
