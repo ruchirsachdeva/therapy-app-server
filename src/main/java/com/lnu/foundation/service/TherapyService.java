@@ -1,5 +1,6 @@
 package com.lnu.foundation.service;
 
+import com.lnu.foundation.model.Duration;
 import com.lnu.foundation.model.Organization;
 import com.lnu.foundation.model.Therapy;
 import com.lnu.foundation.model.User;
@@ -9,6 +10,7 @@ import com.lnu.foundation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,12 +28,11 @@ public class TherapyService {
     public void startTherapy(User patient, Long organizationId) {
         Therapy therapy = new Therapy();
         therapy.setPatient(patient);
-
         Organization org = this.orgRepository.getOne(organizationId);
         therapy.setOrganization(org);
-
         User therapist = findNearestMedByOrganization(patient, organizationId);
         therapy.setMed(therapist);
+        therapy.setDuration(new Duration(LocalDateTime.now(), null));
         this.therapyRepository.save(therapy);
     }
 
