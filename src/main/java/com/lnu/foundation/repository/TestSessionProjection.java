@@ -10,7 +10,7 @@ public interface TestSessionProjection {
 
     Long getTestSessionId();
 
-    Therapy getTherapy();
+    TherapyProjection getTherapy();
 
     List<Note> getNotes();
 
