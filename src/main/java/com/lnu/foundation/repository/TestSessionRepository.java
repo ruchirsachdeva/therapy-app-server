@@ -14,7 +14,7 @@ import java.util.Collection;
 /**
  * Created by rucsac on 15/10/2018.
  */
-@RepositoryRestResource
+@RepositoryRestResource(excerptProjection = TestSessionRepository.class)
 public interface TestSessionRepository extends JpaRepository<TestSession, Long> {
     @RestResource(path = "byMed", rel = "byMed")
     Collection<TestSession> findByTherapy_Med_Username(@Param("med") String username);
@@ -44,6 +44,6 @@ public interface TestSessionRepository extends JpaRepository<TestSession, Long> 
     Collection<TestSession> byTherapyIdHistory(@Param("id") Long id);
 
     @RestResource(path = "byMedUpcoming", rel = "byMedUpcoming")
-    Collection<TestSession> findByTherapy_Med_UsernameAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(@Param("med") String username, @Param("currentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime currentDate);
+    Collection<TestSession> findByTherapy_Med_UsernameAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(@Param("med") String username, @Param("currentDate") LocalDateTime currentDate);
 
 }
