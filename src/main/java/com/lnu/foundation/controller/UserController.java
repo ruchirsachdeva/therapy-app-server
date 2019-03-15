@@ -87,11 +87,10 @@ public class UserController {
     }
 
     @CrossOrigin(origins = {"http://localhost:4200", "https://lit-beach-29911.herokuapp.com"})
-    @GetMapping("/hours/{username}")
-    public List<Duration> getAvailableWorkingDuration(@PathVariable String username, @RequestParam("todate")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate todate) {
+    @GetMapping("/hours/{therapyId}")
+    public List<Duration> getAvailableWorkingDuration(@PathVariable("therapyId") Long therapyId) {
         LocalDate of = LocalDate.of(2019, 4, 13);
-        return service.getAvaliableWorkingDurations(username, todate);
+        return service.getAvaliableWorkingDurations(therapyId);
     }
 
 

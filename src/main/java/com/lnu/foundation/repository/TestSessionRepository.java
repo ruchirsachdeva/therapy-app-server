@@ -44,6 +44,6 @@ public interface TestSessionRepository extends JpaRepository<TestSession, Long> 
     Collection<TestSession> byTherapyIdHistory(@Param("id") Long id);
 
     @RestResource(path = "byMedUpcoming", rel = "byMedUpcoming")
-    Collection<TestSession> findByTherapy_Med_UsernameAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(@Param("med") String username, @Param("currentDate") LocalDateTime currentDate);
+    Collection<TestSession> findByTherapy_TherapyIdAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(@Param("therapyId") long therapyId, @Param("currentDate") LocalDateTime currentDate);
 
 }
