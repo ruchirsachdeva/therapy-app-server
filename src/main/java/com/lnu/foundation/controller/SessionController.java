@@ -34,12 +34,8 @@ public class SessionController {
 
     @CrossOrigin(origins = {"http://localhost:4200", "https://lit-beach-29911.herokuapp.com"})
     @PostMapping("book/{sessionId}")
-    public void book(@PathVariable Long sessionId,
-                     @RequestParam("from")
-                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-                     @RequestParam("to")
-                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
-        service.bookSession(sessionId, from, to);
+    public void book(@PathVariable Long sessionId, @RequestBody Duration duration) {
+        service.bookSession(sessionId, duration);
     }
 
 
