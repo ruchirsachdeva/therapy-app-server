@@ -14,7 +14,7 @@ import java.util.Collection;
 /**
  * Created by rucsac on 15/10/2018.
  */
-@RepositoryRestResource(excerptProjection = TestSessionRepository.class)
+@RepositoryRestResource(excerptProjection = TestSessionProjection.class)
 public interface TestSessionRepository extends JpaRepository<TestSession, Long> {
     @RestResource(path = "byMed", rel = "byMed")
     Collection<TestSession> findByTherapy_Med_Username(@Param("med") String username);
