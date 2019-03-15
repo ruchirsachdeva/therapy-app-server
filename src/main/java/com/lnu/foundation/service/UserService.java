@@ -130,12 +130,12 @@ public class UserService implements UserDetailsService {
         return repository.findByRole_Name(role).get(0);
     }
 
-    public List<Duration> getAvaliableWorkingDurations(long therapyId) {
-        Therapy therapy = therapyRepository.getOne(therapyId);
-        User med = therapy.getMed();
+    public List<Duration> getAvailableWorkingDurations(long sessionId) {
+        TestSession therapy = sessionRepo.getOne(sessionId);
+        User med = therapy.getTherapy().getMed();
         List<Duration> available = med.getWorkingDates(LocalDate.now().plusMonths(12));
         List<Duration> upcoming = new ArrayList<>();
-        Collection<TestSession> upcomingSessions = sessionRepo.findByTherapy_TherapyIdAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(therapyId, LocalDateTime.now());
+        Collection<TestSession> upcomingSessions = sessionRepo.findByTestSessionIdAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(sessionId, LocalDateTime.now());
         for (TestSession upcomingSession : upcomingSessions) {
             upcoming.add(upcomingSession.getDuration());
         }

@@ -5,10 +5,8 @@ import com.lnu.foundation.service.NoteService;
 import com.lnu.foundation.service.SecurityContextService;
 import com.lnu.foundation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -87,10 +85,10 @@ public class UserController {
     }
 
     @CrossOrigin(origins = {"http://localhost:4200", "https://lit-beach-29911.herokuapp.com"})
-    @GetMapping("/hours/{therapyId}")
-    public List<Duration> getAvailableWorkingDuration(@PathVariable("therapyId") Long therapyId) {
+    @GetMapping("/hours/{sessionId}")
+    public List<Duration> getAvailableWorkingDuration(@PathVariable("sessionId") Long sessionId) {
         LocalDate of = LocalDate.of(2019, 4, 13);
-        return service.getAvaliableWorkingDurations(therapyId);
+        return service.getAvailableWorkingDurations(sessionId);
     }
 
 

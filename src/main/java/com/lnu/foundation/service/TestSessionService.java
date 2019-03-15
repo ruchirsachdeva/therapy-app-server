@@ -39,6 +39,7 @@ public class TestSessionService {
     public void bookSession(long sessionId, LocalDateTime startTime, LocalDateTime endTime) {
         TestSession session = sessionRepo.getOne(sessionId);
         session.setDuration(new Duration(startTime, endTime));
+        sessionRepo.save(session);
     }
 
 

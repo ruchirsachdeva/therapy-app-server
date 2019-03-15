@@ -32,7 +32,7 @@ public interface TestSessionRepository extends JpaRepository<TestSession, Long> 
     Collection<TestSession> findByTherapy_TherapyId(@Param("id") Long id);
 
     @RestResource
-    @Query("select t from TestSession t left join t.therapy th where th.therapyId = ?1 and t.duration.startTime is not null")
+    @Query("select t from TestSession t left join t.therapy th where th.therapyId = ?1 and t.duration.startTime is null")
     Collection<TestSession> byTherapyIdRequested(@Param("id") Long id);
 
     @RestResource
@@ -44,6 +44,6 @@ public interface TestSessionRepository extends JpaRepository<TestSession, Long> 
     Collection<TestSession> byTherapyIdHistory(@Param("id") Long id);
 
     @RestResource(path = "byMedUpcoming", rel = "byMedUpcoming")
-    Collection<TestSession> findByTherapy_TherapyIdAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(@Param("therapyId") long therapyId, @Param("currentDate") LocalDateTime currentDate);
+    Collection<TestSession> findByTestSessionIdAndDuration_StartTimeNotNullAndDuration_StartTimeGreaterThan(@Param("testSessionId") long therapyId, @Param("currentDate") LocalDateTime currentDate);
 
 }
