@@ -14,6 +14,8 @@ public interface TherapyProjection {
 
     User getMed();
 
+    User getPatient();
+
     Duration getDuration();
 
     Organization getOrganization();
