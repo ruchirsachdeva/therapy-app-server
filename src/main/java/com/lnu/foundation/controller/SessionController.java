@@ -38,5 +38,9 @@ public class SessionController {
         service.bookSession(sessionId, duration);
     }
 
-
+    @CrossOrigin(origins = {"http://localhost:4200", "https://lit-beach-29911.herokuapp.com"})
+    @PostMapping("end/{sessionId}")
+    public void end(@PathVariable Long sessionId) {
+        service.endSession(sessionId);
+    }
 }

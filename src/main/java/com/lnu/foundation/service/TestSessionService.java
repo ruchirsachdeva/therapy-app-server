@@ -43,4 +43,12 @@ public class TestSessionService {
     }
 
 
+    public void endSession(Long sessionId) {
+        TestSession session = sessionRepo.getOne(sessionId);
+        Duration duration = session.getDuration();
+        duration.setEndTime(LocalDateTime.now());
+        session.setDuration(duration);
+        sessionRepo.save(session);
+
+    }
 }
