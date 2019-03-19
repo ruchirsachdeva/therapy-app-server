@@ -91,16 +91,17 @@ public class UserService implements UserDetailsService {
             Organization org = this.orgRepo.getOne(signupForm.getOrganizationId());
             user.addOrganization(org);
         }
-        repository.save(user);
-
-        if ("PATIENT".equalsIgnoreCase(signupForm.getRoleName())) {
-            this.therapyService.startTherapy(user, signupForm.getOrganizationId());
-        }
 
         String base64 = signupForm.getBase64();
         System.out.println("base64 = ");
         System.out.println(base64);
         byte[] imageByte= Base64.decodeBase64(base64);
+        user.setImage(imageByte);
+        repository.save(user);
+
+        if ("PATIENT".equalsIgnoreCase(signupForm.getRoleName())) {
+            this.therapyService.startTherapy(user, signupForm.getOrganizationId());
+        }
 
 
         return user;
