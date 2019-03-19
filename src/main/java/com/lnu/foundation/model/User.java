@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -56,7 +57,9 @@ public class User implements UserDetails {
     private String password;
     private String passwordConfirm;
     private String provider;
-    private String image;
+    @Lob
+    @Basic
+    private byte[] image;
 
     public void addOrganization(Organization organization) {
         organizations.add(organization);
@@ -107,6 +110,11 @@ public class User implements UserDetails {
     public List<Duration> getWorkingDates(LocalDate toDate) {
         List<Duration> workingDates = getNonNullWorkingHours().getWorkingDates(toDate);
         return workingDates;
+    }
+
+    @JsonProperty
+    public String getBase64() {
+        return Base64.encodeBase64String(this.image);
     }
 
     private WorkingHours getNonNullWorkingHours() {

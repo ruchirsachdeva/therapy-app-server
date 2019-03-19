@@ -2,6 +2,7 @@ package com.lnu.foundation.service;
 
 import com.lnu.foundation.model.*;
 import com.lnu.foundation.repository.*;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -95,6 +96,10 @@ public class UserService implements UserDetailsService {
         if ("PATIENT".equalsIgnoreCase(signupForm.getRoleName())) {
             this.therapyService.startTherapy(user, signupForm.getOrganizationId());
         }
+
+        String base64 = signupForm.getBase64();
+        byte[] imageByte= Base64.decodeBase64(base64);
+
 
         return user;
     }

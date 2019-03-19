@@ -144,7 +144,7 @@ CREATE TABLE `user` (
   `password` varchar(255) DEFAULT NULL,
   `password_confirm` varchar(255) DEFAULT NULL,
   `provider` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `image` longblob DEFAULT NULL,
   `working_hours_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

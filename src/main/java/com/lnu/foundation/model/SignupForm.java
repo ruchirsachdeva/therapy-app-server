@@ -36,6 +36,7 @@ public class SignupForm {
 
 	private Long organizationId;
 	private String roleName;
+	private String base64;
 
 
 	@Override
