@@ -98,6 +98,8 @@ public class UserService implements UserDetailsService {
         }
 
         String base64 = signupForm.getBase64();
+        System.out.println("base64 = ");
+        System.out.println(base64);
         byte[] imageByte= Base64.decodeBase64(base64);
 
 
