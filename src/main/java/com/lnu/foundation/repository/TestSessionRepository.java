@@ -36,11 +36,11 @@ public interface TestSessionRepository extends JpaRepository<TestSession, Long> 
     Collection<TestSession> byTherapyIdRequested(@Param("id") Long id);
 
     @RestResource
-    @Query("select t from TestSession t left join t.therapy th where th.therapyId = ?1 and t.duration.startTime is not null and t.duration.startTime >= CURRENT_DATE ")
+    @Query("select t from TestSession t left join t.therapy th where th.therapyId = ?1 and t.duration.startTime is not null and  t.duration.endTime is null")
     Collection<TestSession> byTherapyIdUpcoming(@Param("id") Long id);
 
     @RestResource
-    @Query("select t from TestSession t left join t.therapy th where th.therapyId = ?1 and t.duration.startTime is not null and t.duration.startTime < CURRENT_DATE ")
+    @Query("select t from TestSession t left join t.therapy th where th.therapyId = ?1 and t.duration.startTime is not null  and  t.duration.endTime is not null")
     Collection<TestSession> byTherapyIdHistory(@Param("id") Long id);
 
     @RestResource(path = "byMedUpcoming", rel = "byMedUpcoming")
