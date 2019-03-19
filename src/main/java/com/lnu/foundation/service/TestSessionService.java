@@ -46,7 +46,11 @@ public class TestSessionService {
     public void endSession(Long sessionId) {
         TestSession session = sessionRepo.getOne(sessionId);
         Duration duration = session.getDuration();
-        duration.setEndTime(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        if(duration.getStartTime()!=null && duration.getStartTime().isAfter(now)){
+        duration.setStartTime(now);
+        }
+        duration.setEndTime(now);
         session.setDuration(duration);
         sessionRepo.save(session);
 
